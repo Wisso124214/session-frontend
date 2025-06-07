@@ -4,7 +4,7 @@ import App from './App';
 export const AppContext = React.createContext();
 
 function AppContextProvider() {
-  const [currentPage, setCurrentPage] = React.useState('asd');
+  const [currentPage, setCurrentPage] = React.useState('Login');
   let context = {
     currentPage,
     setCurrentPage,

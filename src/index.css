@@ -3,20 +3,31 @@
 @import url('https://fonts.googleapis.com/css2?family=Shantell+Sans:ital,wght@0,300..800;1,300..800&display=swap');
 
 :root {
-  --primary-color: #a46f56;
+  --primary-color: #167053;
   --secondary-color: #d8ece9;
-  --tertiary-color:#ca9546;
-  --background-color: #3a3e38;
+  --tertiary-color:#2b8f7e;
+  --background-color: #063237;
   --text-color-dark: #222;
   --text-color-light: #fff;
+  --invalid-color: #f94445;
+  --valid-color: #31c897;
 
-  --background-url-image: url('./assets/background-letters.png');
+  --background-url-image: url('./assets/background-white.png');
   background:
-    linear-gradient(color-mix(in srgb, var(--background-color) 30%, transparent)),
+    linear-gradient(color-mix(in srgb, var(--background-color) 55%, transparent)),
     var(--background-url-image) center/cover repeat,
     var(--background-color);
-  background-size: 300px 300px;
+  background-size: 400px 400px;
   z-index: 0;
+
+  &::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    backdrop-filter: blur(2px);
+    pointer-events: none;
+  }
 }
 
 * {

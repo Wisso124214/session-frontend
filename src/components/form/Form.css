@@ -1,0 +1,169 @@
+.form {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem;
+  background-color: color-mix(in srgb, var(--primary-color) 50%, transparent);
+  border-radius: 1.5rem;
+  width: max(320px, 25vw);
+  place-self: center;
+  padding: 0;
+  padding-top: 20vh;
+  padding-bottom: 6vh;
+  justify-items: center;
+  align-items: center;
+  color: var(--text-color-light);
+  box-shadow: 0 0 15px 0 black;
+  backdrop-filter: blur(3px);
+  top: 50vh;
+  max-height: 65vh;
+  overflow-y: auto;
+  transform: translateY(-50%);
+}
+
+#fingerprint {
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  top: 6vh;
+  fill: var(--text-color-light);
+}
+
+.form-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .75rem;
+  width: 70%;
+}
+
+.form-content input::placeholder {
+  color: var(--secondary-color);
+  opacity: 0.7;
+}
+
+.container-input {
+  padding: 0;
+  border: none;
+  outline: none;
+  overflow: hidden;
+  padding-bottom: .6rem;
+  max-width: 100%;
+  justify-content: center;
+  display: flex;
+}
+
+.container-input input {
+  position: relative;
+  color: var(--text-color-light) !important;
+  font-size: 1rem;
+  
+  height: 26px;
+  margin: 0;
+  border: none;
+  border-bottom: 2px solid var(--secondary-color);
+  padding-bottom: .6rem;
+  background-color: transparent !important;
+  text-align: center;
+}
+
+.container-input input:focus {
+  outline: none;
+  box-shadow: 0 5px 5px color-mix(in srgb, var(--secondary-color) 50%, transparent);
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:focus {
+  transition: background-color 0s 600000s, color 0s 600000s !important;
+}
+
+
+.form-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 90%;
+  user-select: none; 
+}
+
+.form-button-cancel, .form-button-submit {
+  border-radius: 1rem;
+  padding: 0.45rem 1rem;
+  margin-top: 1rem;
+  color: var(--secondary-color);
+  border: 3px transparent solid;
+  font-size: 1rem;
+  color: var(--text-color-light);
+  font-weight: 700;
+  cursor: pointer;
+  width: 40%;
+  min-width: 100px;
+  max-width: 125px;
+  margin-bottom: 0;
+}
+
+.form-button-cancel {
+  background-color: var(--invalid-color);
+}
+
+.form-button-submit {
+  background-color: var(--text-color-light);
+  color: var(--primary-color);
+}
+
+.form-button-cancel:hover, .form-button-cancel:focus {
+  outline: none;
+  background-color: color-mix(in srgb, var(--invalid-color) 80%, black);
+}
+
+.form-button-submit:hover, .form-button-submit:focus {
+  outline: none;
+  background-color: color-mix(in srgb, var(--text-color-light) 80%, transparent);
+}
+
+.form-button-cancel:focus {
+  border: 3px solid var(--invalid-color);
+}
+
+.form-button-submit:focus {
+  border: 3px solid var(--text-color-light);
+}
+
+.form-button-cancel:active {
+  background-color: color-mix(in srgb, var(--invalid-color) 70%, black);
+}
+
+.form-button-submit:active {
+  background-color: color-mix(in srgb, var(--text-color-light) 70%, transparent);
+}
+
+.form-message, .form-bold-message, .form-link {
+  color: var(--text-color-light);
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  width: 85%;
+}
+
+.form-message {
+  padding-top: .5rem;
+  font-weight: 400;
+  font-size: .8rem;
+}
+
+.form-bold-message {
+  padding-top: 2rem;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.form-link {
+  text-decoration: underline;
+  font-style: italic;
+  cursor: pointer;
+}
+
+.form-link:hover {
+  color: var(--secondary-color);
+}

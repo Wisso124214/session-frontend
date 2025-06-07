@@ -7,9 +7,12 @@ export default function NotFound() {
 
   return (
     <div className="not-found">
-      <h1 className="not-found-title">404 - Not Found</h1>
-      <p className="not-found-description">The page you are looking for does not exist.</p>
-      <button className="not-found-link" onClick={() => {setCurrentPage('default')}}>Go to Home</button>
+      <h1 className="not-found-title">404</h1>
+      <h1 className="not-found-text">Page Not Found</h1>
+      <div className="not-found-content">
+        <p className="not-found-description">The page you are looking for does not exist.</p>
+        <div className="not-found-link" onClick={() => {setCurrentPage('default')}}>Go to Home</div>
+      </div>
     </div>
   );
 }

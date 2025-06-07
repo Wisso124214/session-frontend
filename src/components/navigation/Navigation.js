@@ -1,5 +1,5 @@
 import React, { Suspense, lazy, useMemo } from 'react';
-
+import Loader from '@components/loader/Loader';
 
 // Helper to dynamically import components from '@src/pages'
 const importPageComponent = (componentName) =>
@@ -18,7 +18,7 @@ const Navigation = ({ pages, currentPage }) => {
   const PageComponent = pageComponents[currentPage] || importPageComponent('NotFound');
 
   return (
-    <Suspense fallback={<div>Cargando...</div>}>
+    <Suspense fallback={<Loader />}>
       <PageComponent />
     </Suspense>
   );
