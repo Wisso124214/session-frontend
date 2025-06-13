@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import './Form.css';
 
-export default function Form({ children, onSubmit, className = '' }) {
+export default function Form({ children, onSubmit, className = '', adjustableWidth = true }) {
 
   const adjustInputWidth = (input) => {
     if (input && input.value) {
@@ -14,51 +14,56 @@ export default function Form({ children, onSubmit, className = '' }) {
     }
   };
 
-  // Obtener los inputs con clase 'input' hijos de 'form-content'
+  // Obtener los inputs con clase 'input' hijos de 'form-inputs'
   useEffect(() => {
-    const inputs = [];
-    React.Children.forEach(children, child => {
-      if (
-        React.isValidElement(child) &&
-        child.props.className === 'form-content'
-      ) {
-        React.Children.forEach(child.props.children, inputChild => {
-          if (
-            React.isValidElement(inputChild) &&
-            inputChild.type === 'input' &&
-            inputChild.props.className?.split(' ').includes('input')
-          ) {
-            inputs.push(inputChild);
-          }
-        });
-      }
-    });    
+    if (adjustableWidth) {
+      const inputs = [];
+      React.Children.forEach(children, child => {
+        if (
+          React.isValidElement(child) &&
+          child.props.className === 'form-inputs'
+        ) {
+          React.Children.forEach(child.props.children, inputChild => {
+            if (
+              React.isValidElement(inputChild) 
+              && inputChild.props.className?.split(' ').includes('input')
+            ) {
+              inputs.push(inputChild);
+            }
+          });
+        }
+      });    
 
-    // Ajustar inputs
-    inputs.forEach(input => {
-      const inputElement = document.querySelector(`input#${input.props.id}`);
+      // Ajustar inputs
+      inputs.forEach(input => {
+        const inputElements = document.querySelectorAll(`input#${input.props.id}`);
 
-      if (inputElement) {
-        inputElement.style.width = `${inputElement.placeholder.length + 1}ch`;
-        adjustInputWidth(inputElement);        
-        inputElement.addEventListener('input', () => {
-          adjustInputWidth(inputElement);
-        });
-      }
-    });
+        if (inputElements) {
+          inputElements.forEach(inputElement => {
+            if (inputElement) {
+              inputElement.style.width = `${inputElement.placeholder.length + 1}ch`;
+              adjustInputWidth(inputElement);        
+              inputElement.addEventListener('input', () => {
+                adjustInputWidth(inputElement);
+              });
+            }
+          });
+        }
+      });
 
-    // Ajustar container-input
-    const containerInputs = document.querySelectorAll('.container-input');
-    containerInputs.forEach(container => {
-      const input = container.querySelector('input.input');
-      if (input) {
-        input.style.width = `${input.placeholder.length + 1}ch`;
-        adjustInputWidth(container);
-        input.addEventListener('input', () => {
-          adjustInputWidth(container);          
-        });
-      }
-    });
+      // Ajustar container-input
+      const containerInputs = document.querySelectorAll('.container-input');
+      containerInputs.forEach(container => {
+        const input = container.querySelector('input.input');
+        if (input) {
+          input.style.width = `${input.placeholder.length + 1}ch`;
+          adjustInputWidth(container);
+          input.addEventListener('input', () => {
+            adjustInputWidth(container);          
+          });
+        }
+      });
+    }
   }, [children]);
 
   // Envuelve cada input en un div con className 'container-input'
@@ -70,9 +75,9 @@ export default function Form({ children, onSubmit, className = '' }) {
   });
 
   const wrappedChildren = React.Children.map(children, child => {
-    if (React.isValidElement(child) && child.props.className === 'form-content') {
+    if (React.isValidElement(child) && child.props.className === 'form-inputs') {
       return (
-        <div className='form-content'>
+        <div className='form-inputs'>
           {wrappedFormContent(child)}
         </div>
       );

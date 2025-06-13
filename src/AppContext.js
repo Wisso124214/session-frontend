@@ -4,10 +4,19 @@ import App from './App';
 export const AppContext = React.createContext();
 
 function AppContextProvider() {
-  const [currentPage, setCurrentPage] = React.useState('Login');
+  const [currentPage, setCurrentPage] = React.useState('Register');
+  const [popUpMessage, setPopUpMessage] = React.useState({
+    isVisible: false,
+    content: '',
+    buttonText: 'Close',
+    onClose: () => setPopUpMessage(prev => ({ ...prev, isVisible: false })),
+  });
+
   let context = {
     currentPage,
     setCurrentPage,
+    popUpMessage,
+    setPopUpMessage
   }
 
   return (

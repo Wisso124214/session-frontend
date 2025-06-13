@@ -3,6 +3,7 @@ import './App.css';
 // import Header from './components/header/Header';
 import Navigation from './components/navigation/Navigation';
 import { AppContext } from './AppContext';
+import PopUpMessage from './components/popUpMessage/PopUpMessage';
 
 /**
  * 
@@ -25,6 +26,7 @@ function App() {
     <div className="app">
       {/* <Header setType={setType} allTypes={allTypes} type={type} /> */}
       <Navigation pages={pages} currentPage={consumeContext.currentPage === 'default' ? 'Register' : consumeContext.currentPage} />
+      <PopUpMessage />
     </div>
   );
 }
