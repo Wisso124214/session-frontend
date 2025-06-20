@@ -2,3 +2,19 @@
    - Disengage the overlay component, and add it to loader and popUpMessage
    - Add the container-input div on a wrapper function, it must search any input elements on children and children of that children (recursive)
    - Increase the width in all input parents (recursive)
+   
+   - Create mockup to select page to go, it must read the config file, 
+   the config file must contain an array of objects with urls and logos.
+   It must use a component like ListNotes, but with the image centered
+
+   - Fix the infinity error fetching usernames on register 
+
+   KEYBOARD: 
+    - On click enter, press the default button (pop up)
+    - Close pop up pressing ESC
+
+   MOCKUPS
+    - Forgot password
+    - User settings
+
+

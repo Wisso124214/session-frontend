@@ -3,15 +3,10 @@ import './Register.css';
 import Form from '@components/form/Form';
 import Tooltip from '@components/tooltip/Tooltip';
 import { AppContext } from '@src/AppContext';
+import config from '@config/config.js';
+import axios from 'axios';
 
-// Lista de nombres de usuario creativos
-const listUsernames = [
-  "PixelPanda42", "NebulaNinja", "QuantumQuokka", "EchoFalcon", "VortexViper",
-  "LunarLynx", "BlazeBison", "CyberCoyote", "FrostyPhoenix", "MysticMole",
-  "TurboTamarin", "ShadowSheep", "NovaNarwhal", "GigaGiraffe", "RogueRaccoon",
-  "ZenZebra", "AlphaAxolotl", "BetaBuffalo", "DeltaDingo", "OmegaOtter"
-];
-
+const { BACKEND_URL, PROJECT_URL } = config;
 export default function Register() {
   let { setCurrentPage, setPopUpMessage } = React.useContext(AppContext);
 
@@ -21,6 +16,7 @@ export default function Register() {
     password: 30,
   }
 
+  const [listUsernames, setListUsernames] = React.useState([]);
   // Estado para el username y el mensaje de error
   const [username, setUsername] = React.useState('');
   const [usernameError, setUsernameError] = React.useState('');
@@ -31,9 +27,97 @@ export default function Register() {
   const [passwordError, setPasswordError] = React.useState('');
   const [confirmPasswordError, setConfirmPasswordError] = React.useState('');
 
-  const handleRegister = () => {
-    validateEmail();
-    validateUsername();
+  React.useEffect(() => {
+    const fetchUsernames = async () => {
+      await axios.get(`${BACKEND_URL}/get-users`)
+        .then(response => {
+          const usernames = response.data.map(user => user.username);
+          setListUsernames(usernames);
+        })
+        .catch(error => {
+          console.error('Error fetching usernames:', error);
+          setPopUpMessage({
+            isVisible: true,
+            content: 'Error fetching usernames. Please try again later.',
+            buttonText: 'Close',
+            onClose: () => setPopUpMessage(prev => ({ ...prev, isVisible: false })),
+          });
+        })
+    }
+
+    fetchUsernames();
+  }, []);
+
+  const handleRegister = async () => {
+    //Chequear que todos los campos estén llenos
+    //Chequear que todos los campos sean válidos, es decir, que los errores sean ''
+    // Si todo es válido
+      // Añadir a listUsernames (useState) el username (el valor por default debe ser una petición al servidor para obtener la lista de usernames)
+      // Hacer la petición al servidor para registrar al usuario
+      // Redirigir al usuario al frontend de la app (idealmente acá mostrará las páginas a las que puede acceder)
+      // Colocar el loader mientras se hace la petición
+    // Si hay algún error, mostrar el mensaje correspondiente con el pop-up
+
+    if (!username || !email || !password || !confirmPassword) {
+      setPopUpMessage({
+        isVisible: true,
+        content: 'Please fill in all fields.',
+        buttonText: 'Close',
+        onClose: () => setPopUpMessage(prev => ({ ...prev, isVisible: false })),
+      });
+      return;
+    }
+
+    if (usernameError || emailError || passwordError || confirmPasswordError) {
+      setPopUpMessage({
+        isVisible: true,
+        content: 'Please fix the errors before submitting.',
+        buttonText: 'Close',
+        onClose: () => setPopUpMessage(prev => ({ ...prev, isVisible: false })),
+      });
+      return;
+    }
+
+    setListUsernames(prev => [...prev, username]);
+    
+    await axios.post(`${BACKEND_URL}/register`, {
+      username,
+      password,
+      contact: email,
+    })
+    .then(response => {
+      if (response.data.success) {
+        setUsername('');
+        setEmail('');
+        setPassword('');
+        setConfirmPassword('');
+  
+        setPopUpMessage({
+          isVisible: true,
+          content: 'User registered successfully!',
+          buttonText: 'Close',
+          onClose: () => setPopUpMessage(prev => ({ ...prev, isVisible: false })),
+        });
+
+        setTimeout(() => document.location = PROJECT_URL + `?username=${username}`, 1000);
+      } else {
+        setPopUpMessage({
+          isVisible: true,
+          content: response.data.message || 'Registration failed. Please try again.',
+          buttonText: 'Close',
+          onClose: () => setPopUpMessage(prev => ({ ...prev, isVisible: false })),
+        });
+      }
+    })
+    .catch(error => {
+      console.error('Error registering user:', error);
+      setPopUpMessage({
+        isVisible: true,
+        content: 'Error registering user. Please try again later.',
+        buttonText: 'Close',
+        onClose: () => setPopUpMessage(prev => ({ ...prev, isVisible: false })),
+      });
+    });
   }
 
   const validateUsername = (value) => {

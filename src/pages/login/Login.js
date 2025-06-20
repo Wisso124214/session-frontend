@@ -2,17 +2,49 @@ import React from 'react';
 import './Login.css';
 import Form from '@components/form/Form';
 import { AppContext } from '@src/AppContext';
+import config from '@config/config.js';
+import axios from 'axios';
+
+const { BACKEND_URL, PROJECT_URL } = config;
 
 export default function Login() {
   let { setCurrentPage, setPopUpMessage } = React.useContext(AppContext);
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
 
-    setPopUpMessage({
-      isVisible: true,
-      content: 'Login functionality is not implemented yet.',
-      buttonText: 'Close',
-      onClose: () => setPopUpMessage(prev => ({ ...prev, isVisible: false })),
+    await axios.post(`${BACKEND_URL}/login`, {
+      username: document.getElementById('username').value,
+      password: document.getElementById('password').value,
+    })
+    .then(response => {
+      if (response.data.success) {
+        setPopUpMessage({
+          isVisible: true,
+          content: 'Login successful! Redirecting...',
+          buttonText: 'Close',
+          onClose: () => setPopUpMessage(prev => ({ ...prev, isVisible: false })),
+        });
+
+        setTimeout(() => document.location = PROJECT_URL + `?username=${document.getElementById('username').value}`, 1000); // Redirect after 1 second
+
+      } else {
+        // Handle login failure
+        setPopUpMessage({
+          isVisible: true,
+          content: response.data.message || 'Login failed. Please try again.',
+          buttonText: 'Close',
+          onClose: () => setPopUpMessage(prev => ({ ...prev, isVisible: false })),
+        });
+      }
+    })
+    .catch(error => {
+      console.error('Login error:', error);
+      setPopUpMessage({
+        isVisible: true,
+        content: error.response?.data?.message || 'An error occurred during login. Please try again.',
+        buttonText: 'Close',
+        onClose: () => setPopUpMessage(prev => ({ ...prev, isVisible: false })),
+      });
     });
   }
 

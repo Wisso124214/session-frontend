@@ -4,6 +4,10 @@ import './App.css';
 import Navigation from './components/navigation/Navigation';
 import { AppContext } from './AppContext';
 import PopUpMessage from './components/popUpMessage/PopUpMessage';
+import axios from 'axios';
+import config from './config/config.js';
+
+const { BACKEND_URL, FRONTEND_URL } = config;
 
 /**
  * 
@@ -21,6 +25,17 @@ function App() {
     'Login',
     'NotFound',
   ];
+
+  React.useEffect(() => {
+    (async () => {
+      await axios.post(`${BACKEND_URL}/info`, {
+        info: JSON.stringify({ FRONTEND_URL }),
+      })
+      .catch(error => {
+        console.error('Error sending info to backend:', error);
+      });
+    })()
+  }, []);
 
   return (
     <div className="app">

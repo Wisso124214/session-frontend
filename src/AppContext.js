@@ -4,7 +4,7 @@ import App from './App';
 export const AppContext = React.createContext();
 
 function AppContextProvider() {
-  const [currentPage, setCurrentPage] = React.useState('Register');
+  const [currentPage, setCurrentPage] = React.useState('Login');
   const [popUpMessage, setPopUpMessage] = React.useState({
     isVisible: false,
     content: '',
