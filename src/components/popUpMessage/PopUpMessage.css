@@ -42,7 +42,7 @@
 
 .pop-up-content.visible {
   width: 20vw;
-  min-width: 150px;
+  min-width: 200px;
   opacity: 1;
   transform: scale(1);
   pointer-events: auto;

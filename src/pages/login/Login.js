@@ -8,7 +8,7 @@ import axios from 'axios';
 const { BACKEND_URL, PROJECT_URL } = config;
 
 export default function Login() {
-  let { setCurrentPage, setPopUpMessage } = React.useContext(AppContext);
+  const { setCurrentPage, setPopUpMessage } = React.useContext(AppContext);
 
   const handleLogin = async () => {
 
