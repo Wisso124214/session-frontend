@@ -5,7 +5,7 @@ import { AppContext } from '@src/AppContext';
 import config from '@config/config.js';
 import axios from 'axios';
 
-const { BACKEND_URL, PROJECT_URL } = config;
+const { BACKEND_URL } = config;
 
 export default function Login() {
   const { setCurrentPage, setPopUpMessage } = React.useContext(AppContext);
@@ -32,8 +32,6 @@ export default function Login() {
           });
           setTimeout(() => document.location = redirectUrl + `?username=${document.getElementById('username').value}`, 1000); // Redirect after 1 second
         }
-
-
       } else {
         // Handle login failure
         setPopUpMessage({

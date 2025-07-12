@@ -6,7 +6,7 @@ import { AppContext } from '@src/AppContext';
 import config from '@config/config.js';
 import axios from 'axios';
 
-const { BACKEND_URL, PROJECT_URL } = config;
+const { BACKEND_URL } = config;
 export default function Register() {
   let { setCurrentPage, setPopUpMessage } = React.useContext(AppContext);
 
@@ -102,7 +102,15 @@ export default function Register() {
         // Get the redirect from the uri
         const urlParams = new URLSearchParams(window.location.search);
         const redirectUrl = urlParams.get('redirect');
-        if (redirectUrl) {
+        if (!redirectUrl) {
+          setCurrentPage('ListNotes');
+        } else {
+          setPopUpMessage({
+            isVisible: true,
+            content: 'Login successful! Redirecting...',
+            buttonText: 'Close',
+            onClose: () => setPopUpMessage(prev => ({ ...prev, isVisible: false })),
+          });
           setTimeout(() => document.location = redirectUrl + `?username=${document.getElementById('username').value}`, 1000); // Redirect after 1 second
         }
       } else {
