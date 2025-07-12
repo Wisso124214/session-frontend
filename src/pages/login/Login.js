@@ -18,14 +18,21 @@ export default function Login() {
     })
     .then(response => {
       if (response.data.success) {
-        setPopUpMessage({
-          isVisible: true,
-          content: 'Login successful! Redirecting...',
-          buttonText: 'Close',
-          onClose: () => setPopUpMessage(prev => ({ ...prev, isVisible: false })),
-        });
+        // Get the redirect from the uri
+        const urlParams = new URLSearchParams(window.location.search);
+        const redirectUrl = urlParams.get('redirect');
+        if (!redirectUrl) {
+          setCurrentPage('ListNotes');
+        } else {
+          setPopUpMessage({
+            isVisible: true,
+            content: 'Login successful! Redirecting...',
+            buttonText: 'Close',
+            onClose: () => setPopUpMessage(prev => ({ ...prev, isVisible: false })),
+          });
+          setTimeout(() => document.location = redirectUrl + `?username=${document.getElementById('username').value}`, 1000); // Redirect after 1 second
+        }
 
-        setTimeout(() => document.location = PROJECT_URL + `?username=${document.getElementById('username').value}`, 1000); // Redirect after 1 second
 
       } else {
         // Handle login failure

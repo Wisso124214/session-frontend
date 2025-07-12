@@ -10,25 +10,16 @@
   padding-top: 1.5rem;
   height: max-content;
   user-select: none;
-
   backdrop-filter: blur(2px);
 }
 
-.note-square {
-  height: 25vh;
-}
-
-.note:hover {
-  box-shadow: 0 0 12px 12px rgba(0, 0, 0, .5);
-  cursor: pointer;
-}
-
-.note-title {
+.note-name {
+  color: var(--text-color-light);
   margin-left: -.5rem;
   font-size: 1.5rem;
   font-weight: 500;
-  margin-bottom: 1rem;
-  
+  margin-top: 1.5rem;
+  text-align: center;
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
@@ -36,35 +27,14 @@
   -webkit-box-orient: vertical;
 }
 
-.note-content-square {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 5; /* Number of lines to show */
-  -webkit-box-orient: vertical;
+.note-logo {
+  object-fit: contain;
+  border-radius: 50%;
+  transition: transform 0.2s ease-in-out;
 }
 
-/* .note-content-all {
-  overflow: hidden;
-  text-overflow: ellipsis;
-} */
-
-.note-title-titles {
-  margin-bottom: 2rem;
-  -webkit-line-clamp: 2;
-}
-
-.note-details {
-  font-size: .7rem;
-
-  display: flex;
-  position: absolute;
-  bottom: .8rem;
-  right: 1.5rem;
-  flex-direction: column;
-  text-align: right;
-  color: var(--secondary-color);
-  font-style: italic;
-
-  user-select: none;
+.note-logo:hover {
+  transform: scale(1.1);
+  opacity: 0.8;
+  cursor: pointer;
 }

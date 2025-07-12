@@ -99,7 +99,12 @@ export default function Register() {
           onClose: () => setPopUpMessage(prev => ({ ...prev, isVisible: false })),
         });
 
-        setTimeout(() => document.location = PROJECT_URL + `?username=${username}`, 1000);
+        // Get the redirect from the uri
+        const urlParams = new URLSearchParams(window.location.search);
+        const redirectUrl = urlParams.get('redirect');
+        if (redirectUrl) {
+          setTimeout(() => document.location = redirectUrl + `?username=${document.getElementById('username').value}`, 1000); // Redirect after 1 second
+        }
       } else {
         setPopUpMessage({
           isVisible: true,
